@@ -1,19 +1,18 @@
+# requirements.txt
+
+# Core ML/DL
+torch
+transformers
+ultralytics
+peft
 accelerate
 bitsandbytes
 einops
-gdown
-hf_xet
-json5
-numpy
-opencv-python
-peft
-pillow
-pyyaml
-qwen-vl-utils
 safetensors
-seaborn
-torch
+
+# Utilities
+opencv-python-headless
+json5
+pyyaml
 tqdm
-transformers
-ultralytics
-uuid
+gdown # For initial setup, optional for package users
