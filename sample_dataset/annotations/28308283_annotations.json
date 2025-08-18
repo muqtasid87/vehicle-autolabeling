@@ -1,0 +1,27 @@
+{
+  "image": {
+    "filename": "28308283.jpg",
+    "width": 1338,
+    "height": 1070,
+    "timestamp": "2025-08-18T03:35:04.038Z"
+  },
+  "objects": [
+    {
+      "id": 1755488112462.606,
+      "type": "vehicle",
+      "bbox": [
+        33,
+        66,
+        1265,
+        893
+      ],
+      "parent_id": null
+    }
+  ],
+  "export_info": {
+    "tool": "Advanced Vehicle Dataset Annotation Tool",
+    "version": "2.0",
+    "exported_at": "2025-08-18T03:38:46.937Z",
+    "schema_version": "AVC-ANPR-v2.0"
+  }
+}

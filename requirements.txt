@@ -1,18 +1,23 @@
-# requirements.txt
-
-# Core ML/DL
-torch
-transformers
-ultralytics
+unsloth
+trl
 peft
 accelerate
+qwen_vl_utils
+transformers
+huggingface
+datasets
+opencv-python
+Pillow
+tqdm
+json5
+ultralytics
+seaborn
+numpy
+pandas
+matplotlib
+hf_xet
 bitsandbytes
 einops
 safetensors
-
-# Utilities
-opencv-python-headless
-json5
+hf_xet
 pyyaml
-tqdm
-gdown # For initial setup, optional for package users

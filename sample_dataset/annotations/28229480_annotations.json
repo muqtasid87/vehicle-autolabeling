@@ -1,0 +1,69 @@
+{
+  "image": {
+    "filename": "28229480.jpg",
+    "width": 1440,
+    "height": 1080,
+    "timestamp": "2025-08-18T03:31:50.083Z"
+  },
+  "objects": [
+    {
+      "id": 1755488280123.3147,
+      "type": "vehicle",
+      "bbox": [
+        158,
+        198,
+        1332,
+        918
+      ],
+      "view_pose": "front",
+      "direction": "right_to_left",
+      "vehicle_info": {
+        "category": "Large_Truck",
+        "subcategory": "4-Axle Larger commercial trucks",
+        "country": "MY",
+        "brand": "SCANIA",
+        "model": "",
+        "color": "White",
+        "operator": "",
+        "number_of_seats": 4
+      },
+      "mechanical": {
+        "number_of_wheels_visible": 4,
+        "number_of_axles_inferred": 2,
+        "number_of_axles_raised": 0,
+        "truck_trailer_labels_visible": false,
+        "cargo_present": false
+      },
+      "attributes": {
+        "is_taxi": false,
+        "is_bus": false,
+        "bus_type": "",
+        "is_emergency_vehicle": false,
+        "is_electric": false
+      },
+      "license_plate": {
+        "bbox": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "text": "VV9618",
+        "country": "MY",
+        "format": "License_Plate_Normal",
+        "blurred": false,
+        "visible": true
+      },
+      "wheels": [],
+      "axles": [],
+      "attachments": [],
+      "CoT": []
+    }
+  ],
+  "export_info": {
+    "tool": "Advanced Vehicle Dataset Annotation Tool",
+    "version": "2.0",
+    "exported_at": "2025-08-18T03:38:21.620Z",
+    "schema_version": "AVC-ANPR-v2.0"
+  }
+}
