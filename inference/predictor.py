@@ -16,13 +16,15 @@ import config
 logger = logging.getLogger(__name__)
 
 class VlmPredictor:
-    def __init__(self, model_name, input_folder, lora_adapter_path, yolo_model_path, batch_size):
+    def __init__(self, model_name, input_folder, lora_adapter_path, yolo_model_path, batch_size, use_lora=True):
         self.model_name = model_name.lower()
         self.input_folder = Path(input_folder)
         self.lora_adapter_path = lora_adapter_path
         self.batch_size = batch_size
+        self.use_lora = use_lora
 
-        self.output_dir = setup_logging_and_dir("Inference", model_name.capitalize())
+        model_type = "Base" if not self.use_lora else "Finetuned"
+        self.output_dir = setup_logging_and_dir("Inference", f"{model_name.capitalize()}_{model_type}")
         self.json_output_dir = Path(self.output_dir) / "json_outputs"
         self.json_output_dir.mkdir(exist_ok=True)
         self.error_log_path = Path(self.output_dir) / "parsing_errors.log"
@@ -31,23 +33,32 @@ class VlmPredictor:
         self._load_vlm()
 
     def _load_vlm(self):
-        """Loads the base VLM and attaches the fine-tuned LoRA adapters."""
+        """Loads the base VLM and optionally attaches the fine-tuned LoRA adapters."""
         logger.info(f"Loading base model for '{self.model_name}'...")
         if self.model_name == 'qwen':
             base_model_id = "Qwen/Qwen2.5-VL-3B-Instruct"
         elif self.model_name == 'gemma':
-            base_model_id = "unsloth/gemma-3-4b-pt" 
+            base_model_id = "unsloth/gemma-3-4b-pt" # Using the same base as for finetuning
         else:
             raise ValueError("Unsupported model_name. Choose 'qwen' or 'gemma'.")
 
-
+        # Load base model
         self.model, self.tokenizer = FastVisionModel.from_pretrained(
             base_model_id,
             load_in_4bit=True,
-            )
-        logger.info("Base model loaded. Merging with LoRA adapters...")
-        self.model = PeftModel.from_pretrained(self.model, self.lora_adapter_path)
-        logger.info("LoRA adapters merged successfully.")
+        )
+        
+        # Optionally merge with LoRA adapters
+        if self.use_lora:
+            if self.lora_adapter_path:
+                logger.info("Base model loaded. Merging with LoRA adapters...")
+                self.model = PeftModel.from_pretrained(self.model, self.lora_adapter_path)
+                logger.info("LoRA adapters merged successfully.")
+            else:
+                logger.warning("use_lora=True but no lora_adapter_path provided. Using base model only.")
+                self.use_lora = False
+        else:
+            logger.info("Using base model only (no LoRA adapters).")
 
     def _vlm_inference_batch(self, batch_of_crops):
         """Performs inference on a batch of image crops."""
@@ -89,7 +100,7 @@ class VlmPredictor:
                          for k, v in inputs.items()}
 
             with torch.inference_mode():
-                generated_ids = self.model.generate(**inputs, max_new_tokens=1024, do_sample=False)
+                generated_ids = self.model.generate(**inputs, max_new_tokens=512, do_sample=False)
                 decoded_outputs = self.tokenizer.batch_decode(generated_ids[:, inputs["input_ids"].shape[1]:], skip_special_tokens=True)
         
         except Exception as e:
@@ -112,7 +123,7 @@ class VlmPredictor:
                                  for k, v in inputs.items()}
                     
                     with torch.inference_mode():
-                        generated_ids = self.model.generate(**inputs, max_new_tokens=1024, do_sample=False)
+                        generated_ids = self.model.generate(**inputs, max_new_tokens=512, do_sample=False)
                         decoded_output = self.tokenizer.decode(generated_ids[0, inputs["input_ids"].shape[1]:], skip_special_tokens=True)
                         decoded_outputs.append(decoded_output)
                 except Exception as inner_e:
