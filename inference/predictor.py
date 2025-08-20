@@ -38,7 +38,7 @@ class VlmPredictor:
         if self.model_name == 'qwen':
             base_model_id = "Qwen/Qwen2.5-VL-3B-Instruct"
         elif self.model_name == 'gemma':
-            base_model_id = "unsloth/gemma-3-4b-pt" # Using the same base as for finetuning
+            base_model_id = "unsloth/gemma-3-4b-it" # Using the same base as for finetuning
         else:
             raise ValueError("Unsupported model_name. Choose 'qwen' or 'gemma'.")
 
@@ -72,9 +72,15 @@ class VlmPredictor:
         conversations = []
         for image in valid_pil_images:
             messages = [{
+                "role": "system",
+                "content": [
+                    {"type": "text", "text": f"{config.SYSTEM_PROMPT}"},
+                ]
+            },
+                        {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": f"{config.SYSTEM_PROMPT}\n\n{config.USER_PROMPT}"},
+                    {"type": "text", "text": f"{config.USER_PROMPT}"},
                     {"type": "image", "image": image},
                 ]
             }]

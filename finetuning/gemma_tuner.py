@@ -36,7 +36,7 @@ class GemmaTuner(BaseTuner):
         logger.info("Loading Gemma-3-4B-PT model and processor...")
         # Note: Gemma uses a 'processor' which is analogous to a tokenizer for Qwen
         self.model, self.tokenizer = FastVisionModel.from_pretrained(
-            "unsloth/gemma-3-4b-pt",
+            "unsloth/gemma-3-4b-it",
             load_in_4bit=True,
             use_gradient_checkpointing="unsloth",
         )
