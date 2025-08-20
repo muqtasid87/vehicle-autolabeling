@@ -12,6 +12,9 @@ from .yolo_detector import YoloDetector
 from .utils import base64_to_pil, clean_and_parse_json
 from common.logging_setup import setup_logging_and_dir
 import config
+import pathlib
+temp = pathlib.PosixPath
+pathlib.PosixPath = pathlib.WindowsPath
 
 logger = logging.getLogger(__name__)
 
