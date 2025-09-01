@@ -12,6 +12,7 @@ from .yolo_detector import YoloDetector
 from .utils import base64_to_pil, clean_and_parse_json
 from common.logging_setup import setup_logging_and_dir
 from config import USER_PROMPT, SYSTEM_PROMPT
+from collections import defaultdict
 import pathlib
 import platform
 
