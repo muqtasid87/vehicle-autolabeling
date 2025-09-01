@@ -2,7 +2,13 @@ import logging
 import uuid
 import torch
 from .utils import numpy_to_base64
+import pathlib
+import platform
 
+# Only patch if running on Windows
+if platform.system() == "Windows":
+    pathlib.PosixPath = pathlib.WindowsPath
+    
 logger = logging.getLogger(__name__)
 
 class YoloDetector:

@@ -13,8 +13,11 @@ from .utils import base64_to_pil, clean_and_parse_json
 from common.logging_setup import setup_logging_and_dir
 from config import USER_PROMPT, SYSTEM_PROMPT
 import pathlib
-temp = pathlib.PosixPath
-pathlib.PosixPath = pathlib.WindowsPath
+import platform
+
+# Only patch if running on Windows
+if platform.system() == "Windows":
+    pathlib.PosixPath = pathlib.WindowsPath
 
 logger = logging.getLogger(__name__)
 
