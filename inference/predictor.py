@@ -98,7 +98,7 @@ class VlmPredictor:
             inputs = {key: value.to(self.model.device) for key, value in inputs.items()}
 
             with torch.inference_mode():
-                generated_ids = self.model.generate(**inputs, max_new_tokens=512, do_sample=False)
+                generated_ids = self.model.generate(**inputs, max_new_tokens=1024, do_sample=False, repetition_penalty=1.2)
 
             input_ids_len = inputs["input_ids"].shape[1]
             decoded_outputs = self.tokenizer.batch_decode(generated_ids[:, input_ids_len:], skip_special_tokens=True)
@@ -165,7 +165,7 @@ class VlmPredictor:
             batched_inputs = {key: value.to(self.model.device) for key, value in batched_inputs.items()}
 
             with torch.inference_mode():
-                generated_ids = self.model.generate(**batched_inputs, max_new_tokens=512, do_sample=False)
+                generated_ids = self.model.generate(**batched_inputs, max_new_tokens=1024, do_sample=False, repetition_penalty=1.2)
 
             input_ids_len = batched_inputs["input_ids"].shape[1]
             decoded_outputs = self.tokenizer.batch_decode(generated_ids[:, input_ids_len:], skip_special_tokens=True)
