@@ -23,13 +23,13 @@ if platform.system() == "Windows":
 logger = logging.getLogger(__name__)
 
 class VlmPredictor:
-    def __init__(self, model_name, input_folder, lora_adapter_path, yolo_model_path, batch_size, use_lora=True):
+    def __init__(self, model_name, input_folder, lora_adapter_path, yolo_model_path, batch_size, use_lora=True, repetition_penalty = 1):
         self.model_name = model_name.lower()
         self.input_folder = Path(input_folder)
         self.lora_adapter_path = lora_adapter_path
         self.batch_size = batch_size
         self.use_lora = use_lora
-
+        self.repetition_penalty = repetition_penalty
         model_type = "Base" if not self.use_lora else "Finetuned"
         self.output_dir = setup_logging_and_dir("Inference", f"{model_name.capitalize()}_{model_type}")
         self.json_output_dir = Path(self.output_dir) / "json_outputs"
@@ -98,7 +98,7 @@ class VlmPredictor:
             inputs = {key: value.to(self.model.device) for key, value in inputs.items()}
 
             with torch.inference_mode():
-                generated_ids = self.model.generate(**inputs, max_new_tokens=1024, do_sample=False, repetition_penalty=1.2)
+                generated_ids = self.model.generate(**inputs, max_new_tokens=1024, do_sample=False, repetition_penalty=self.repetition_penalty)
 
             input_ids_len = inputs["input_ids"].shape[1]
             decoded_outputs = self.tokenizer.batch_decode(generated_ids[:, input_ids_len:], skip_special_tokens=True)
@@ -165,7 +165,7 @@ class VlmPredictor:
             batched_inputs = {key: value.to(self.model.device) for key, value in batched_inputs.items()}
 
             with torch.inference_mode():
-                generated_ids = self.model.generate(**batched_inputs, max_new_tokens=1024, do_sample=False, repetition_penalty=1.2)
+                generated_ids = self.model.generate(**batched_inputs, max_new_tokens=1024, do_sample=False, repetition_penalty=self.repetition_penalty)
 
             input_ids_len = batched_inputs["input_ids"].shape[1]
             decoded_outputs = self.tokenizer.batch_decode(generated_ids[:, input_ids_len:], skip_special_tokens=True)
