@@ -6,7 +6,8 @@ def run_inference(
     lora_adapter_path: str = None,
     yolo_model_path: str = 'best_avc_v5.pt',
     batch_size: int = 4,
-    use_lora: bool = True
+    use_lora: bool = True,
+    repetition_penalty: float = 1.1
 ):
     """
     Runs the inference pipeline using a VLM (with or without fine-tuned LoRA adapters).
@@ -30,7 +31,8 @@ def run_inference(
         lora_adapter_path=lora_adapter_path,
         yolo_model_path=yolo_model_path,
         batch_size=batch_size,
-        use_lora=use_lora
+        use_lora=use_lora,
+        repetition_penalty=repetition_penalty
     )
     output_path = predictor.run()
     print(f"✅ Inference complete!")
@@ -56,5 +58,6 @@ if __name__ == '__main__':
         lora_adapter_path=None,  
         yolo_model_path='best_avc_v5.pt',
         batch_size=2,
-        use_lora=False  # This will use the base model only
+        use_lora=False,  # This will use the base model only
+        repetition_penalty = 1.1
     )
