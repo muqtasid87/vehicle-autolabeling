@@ -60,7 +60,7 @@ class BaseTuner(ABC):
             "messages": [
                 {
                     "role": "system",
-                    "content": [{"type": "text", "text": {config.SYSTEM_PROMPT}}]
+                    "content": [{"type": "text", "text": f"{config.SYSTEM_PROMPT}"}]
                 },
                 {
                     "role": "user",
