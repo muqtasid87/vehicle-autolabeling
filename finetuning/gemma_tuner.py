@@ -39,6 +39,7 @@ class GemmaTuner(BaseTuner):
             "unsloth/gemma-3-4b-it",
             load_in_4bit=True,
             use_gradient_checkpointing="unsloth",
+            max_seq_length=8192,
         )
         
         # Apply the correct chat template for Gemma

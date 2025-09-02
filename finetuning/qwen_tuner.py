@@ -35,6 +35,7 @@ class QwenTuner(BaseTuner):
             "Qwen/Qwen2.5-VL-3B-Instruct",
             load_in_4bit=True,
             use_gradient_checkpointing="unsloth",
+            max_seq_length=8192,
         )
 
     def _configure_peft(self):
