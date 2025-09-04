@@ -38,6 +38,7 @@ if __name__ == '__main__':
 # ---------------------------------
 # --- Fine-Tuning Example ---
 # ---------------------------------
+model_name = str(input("Enter model name (qwen/gemma): ")).lower().strip()
 
     # Define custom hyperparameters for training. Any SFTConfig argument can be overridden.
     custom_hyperparams = {
@@ -47,7 +48,7 @@ if __name__ == '__main__':
     }
 
     run_finetuning(
-        model_name='gemma',  # or 'qwen'
+        model_name=model_name,  # or 'qwen'
         input_folder='sample_dataset',
         images_subfolder='images', # Assumes dataset folder has 'images' and 'annotations' subfolders
         json_subfolder='annotations',

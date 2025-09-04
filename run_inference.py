@@ -39,11 +39,14 @@ def run_inference(
     print(f"📁 Results, logs, and JSON files are saved in: {output_path}")
 
 if __name__ == '__main__':
+    
+model_name = str(input("Enter model name (qwen/gemma): ")).lower().strip() 
+   
     # --- EXAMPLE USAGE ---
     
     # Option 1: Run with LoRA adapters 
     # run_inference(
-    #     model_name='qwen',  # or 'gemma'
+    #     model_name=model_name,  # or 'gemma'
     #     input_folder='sample_dataset/images',
     #     lora_adapter_path='/runs/Qwen_Finetuning_04-05-18-08-2025/lora_model',
     #     yolo_model_path='best_avc_v5.pt',
@@ -53,7 +56,7 @@ if __name__ == '__main__':
     
     # Option 2: Run with base model only (no LoRA)
     run_inference(
-        model_name='qwen',  # or 'gemma'
+        model_name=model_name,  # or 'gemma'
         input_folder='sample_dataset/images',
         lora_adapter_path=None,  
         yolo_model_path='best_avc_v5.pt',
