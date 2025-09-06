@@ -38,7 +38,7 @@ if __name__ == '__main__':
 # ---------------------------------
 # --- Fine-Tuning Example ---
 # ---------------------------------
-model_name = str(input("Enter model name (qwen/gemma): ")).lower().strip()
+    model_name = str(input("Enter model name (qwen/gemma): ")).lower().strip()
 
     # Define custom hyperparameters for training. Any SFTConfig argument can be overridden.
     custom_hyperparams = {

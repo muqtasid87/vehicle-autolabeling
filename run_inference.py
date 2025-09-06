@@ -40,7 +40,7 @@ def run_inference(
 
 if __name__ == '__main__':
     
-model_name = str(input("Enter model name (qwen/gemma): ")).lower().strip() 
+    model_name = str(input("Enter model name (qwen/gemma): ")).lower().strip() 
    
     # --- EXAMPLE USAGE ---
     
