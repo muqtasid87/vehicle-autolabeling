@@ -27,6 +27,8 @@ class QwenTuner(BaseTuner):
             "report_to": "none",
             "remove_unused_columns": False,
             "dataset_text_field": "",
+            "dataset_kwargs" = {"skip_prepare_dataset": True},
+            "max_length" = 8192,
         }
 
     def _load_model_and_tokenizer(self):
