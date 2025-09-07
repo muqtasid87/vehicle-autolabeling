@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 def load_and_process_data(images_folder: str, json_folder: str):
     """
     Loads JSON annotations, crops images based on bounding boxes,
-    and creates training samples.
+    and creates training samples for vehicles only.
 
     Args:
         images_folder (str): Path to the folder containing images.
@@ -36,6 +36,10 @@ def load_and_process_data(images_folder: str, json_folder: str):
             original_image = Image.open(image_path).convert("RGB")
 
             for obj in annotation.get("objects", []):
+                # Only process objects of type "vehicle"
+                if obj.get("type") != "vehicle":
+                    continue
+                    
                 try:
                     bbox = obj["bbox"]  # [x1, y1, x2, y2]
                     cropped_image = original_image.crop(bbox)
@@ -53,12 +57,12 @@ def load_and_process_data(images_folder: str, json_folder: str):
                     training_samples.append(sample)
 
                 except Exception as e:
-                    logger.error(f"Error processing object in {json_file}: {e}")
+                    logger.error(f"Error processing vehicle object in {json_file}: {e}")
                     continue
 
         except Exception as e:
             logger.error(f"Error processing {json_file}: {e}")
             continue
 
-    logger.info(f"Successfully created {len(training_samples)} training samples.")
+    logger.info(f"Successfully created {len(training_samples)} training samples from vehicle objects.")
     return training_samples
