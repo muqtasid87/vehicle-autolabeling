@@ -42,9 +42,9 @@ if __name__ == '__main__':
 
     # Define custom hyperparameters for training. Any SFTConfig argument can be overridden.
     custom_hyperparams = {
-        "num_train_epochs": 1,
-        "learning_rate": 5e-5,
-        "per_device_train_batch_size": 1,
+        "num_train_epochs": 3,
+        "learning_rate": 2e-4,
+        "per_device_train_batch_size": 4,
     }
 
     run_finetuning(
