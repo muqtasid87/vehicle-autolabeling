@@ -136,7 +136,7 @@ class VlmPredictor:
             if img is not None:
                 valid_indices.append(i)
                 messages = [
-                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "system", "content": [{"type":"text", "text": SYSTEM_PROMPT}]},
                     {"role": "user", "content": [{"type": "text", "text": USER_PROMPT}, {"type": "image"}]}
                 ]
                 text_prompt = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)

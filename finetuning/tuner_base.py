@@ -59,13 +59,9 @@ class BaseTuner(ABC):
         return {
             "messages": [
                 {
-                    "role": "system",
-                    "content": [{"type": "text", "text": f"{config.SYSTEM_PROMPT}"}]
-                },
-                {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": f"{config.USER_PROMPT}"},
+                        {"type": "text", "text": f"{config.SYSTEM_PROMPT} {config.USER_PROMPT}"},
                         {"type": "image", "image": sample["image"]},
                     ],
                 },
