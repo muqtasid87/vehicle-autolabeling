@@ -13,8 +13,6 @@ def setup_logging_and_dir(base_folder_name: str, model_name: str):
     Returns:
         str: The path to the created output directory.
     """
-    # --- CHANGE STARTS HERE ---
-
     # 1. Define the main 'runs' directory
     runs_dir = "runs"
     os.makedirs(runs_dir, exist_ok=True)
@@ -25,7 +23,6 @@ def setup_logging_and_dir(base_folder_name: str, model_name: str):
     output_dir_path = os.path.join(runs_dir, output_dir_name)
     os.makedirs(output_dir_path, exist_ok=True)
 
-    # --- CHANGE ENDS HERE ---
 
     log_file = os.path.join(output_dir_path, f'{base_folder_name.lower()}.log')
 
