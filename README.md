@@ -1,12 +1,15 @@
-
+This repository provides tools for automatic vehicle labeling in images using YOLOv5 for detection and fine-tuned VLMs (Qwen2.5-VL-3B or Gemma-3-4B) for attribute extraction. Supports fine-tuning, inference, similarity comparison between models, and evaluation against ground truth annotations.
+Video guides can be found in this drive folder: https://drive.google.com/drive/folders/1jKFr_rrCbyCkJCMftWXr755QColJbYZy?usp=sharing
 
 ## 📋 1. Initial Setup & Preparation
-
-Before you can run any of the main tasks, you need to set up your environment and data.
 
 ### Environment Setup
 
 1.  **Clone the Repository**: Start by getting the code on your local machine.
+    ```bash
+    git clone https://github.com/muqtasid87/vehicle-autolabeling.git
+    cd vehicle-autolabeling
+    ```
 
 2.  **Install Dependencies**: The `requirements.txt` file contains all the necessary Python libraries. It's highly recommended to use a virtual environment.
 
@@ -14,7 +17,8 @@ Before you can run any of the main tasks, you need to set up your environment an
     # Create and activate a virtual environment (optional but recommended)
     python -m venv venv
     source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-
+    #Install pytorch first
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
     # Install the required packages
     pip install -r requirements.txt
     ```
@@ -26,7 +30,7 @@ Before you can run any of the main tasks, you need to set up your environment an
 The project expects a specific folder structure for your data, as seen in the **`sample_dataset`** directory.
 
   * **/images**: This folder should contain all your image files (e.g., `.jpg`, `.png`).
-  * **/annotations**: This folder should contain the corresponding JSON annotation files. Each JSON file should have the same name as its image (e.g., `image1.jpg` corresponds to `image1_annotations.json`).
+  * **/annotations**: This folder should contain the corresponding JSON annotation files. Each JSON file should have the same name as its image and end with a _annotations suffix (e.g., `image1.jpg` corresponds to `image1_annotations.json`).
 
 The JSON files are only needed for **fine-tuning** and **evaluation**. For running basic inference on new images, you only need the **/images** folder.
 
@@ -58,14 +62,15 @@ This task trains a base model (Gemma or Qwen) on your custom dataset to improve 
 3.  **Follow the Prompt**:
 
       * Enter `qwen` or `gemma` when asked.
-      * The script will then load your dataset from the **`sample_dataset`** folder, configure the model, and begin training. You'll see progress and metrics printed to the console.
+      * The script will then load your dataset from the **`sample_dataset`** folder, configure the model, and begin training. You'll see progress and metrics printed to the console. You can change the input_folder in the script to point to             your own dataset. 
 
 ### What You Get
 
-  * **Trained Adapters**: Once training is complete, the fine-tuned model weights (LoRA adapters) will be saved in a new, timestamped directory.
-  * **Path**: `runs/Qwen_Finetuning_[TIMESTAMP]/lora_model/`
+  * The fine-tuned model components, known as LoRA adapters, will be saved in a new, timestamped directory inside the runs/ folder. The path will look something like this:
 
-You will use this path in the next step to run inference with your newly trained model.
+    ```runs/Qwen_Finetuning_18-21-17-09-2025/lora_model/```
+    
+    You will need this path for the next step.
 
 -----
 
@@ -155,8 +160,7 @@ After running inference, you can use this script to score how well your model's 
 
 -----
 
-## 🎭 5. Task: Comparing Two Models
-
+## 🎭 5. Task: Similarity Matching Between Qwen and Gemma Outputs
 This is useful for comparing the results of two different models (e.g., base Gemma vs. fine-tuned Qwen) on the same dataset.
 
 ### How to Run
