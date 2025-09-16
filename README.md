@@ -76,7 +76,8 @@ This task trains a base model (Gemma or Qwen) on your custom dataset to improve 
 
 ## 🚀 3. Task: Running Inference
 
-This is the main task where the model analyzes new images and generates the vehicle attribute JSON files. You can run this with a base model or your fine-tuned model.
+This is the main task where the model analyzes new images and generates the vehicle attribute JSON files. You can run this with a base model or your fine-tuned model. 
+**NOTE**: Batching is currently only supported on Gemma during inference. For Qwen inference, please set the batch_size to 1 to avoid errors.
 
 ### How to Run
 
