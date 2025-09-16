@@ -60,7 +60,7 @@ if __name__ == '__main__':
         input_folder='sample_dataset/images',
         lora_adapter_path=None,  
         yolo_model_path='best_avc_v5.pt',
-        batch_size=2,
+        batch_size=1,
         use_lora=False,  # This will use the base model only
         repetition_penalty = 1.1
     )
