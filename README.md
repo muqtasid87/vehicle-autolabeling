@@ -1,6 +1,4 @@
-Of course\! Here's a comprehensive guide on how to use the repository to perform each of the key tasks.
 
------
 
 ## 📋 1. Initial Setup & Preparation
 
